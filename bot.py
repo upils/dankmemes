@@ -29,11 +29,12 @@ def getMemeByName(memeName):
 # Liste des memes actuels
 def getMemeList():
   memesDict = loadFile()
-  list = ['','']
+  list = ['']
   i = 0
   for k in memesDict:
     if list[i].count('\n') > 41:
       i = i + 1
+      list.append('')
     list[i] = list[i] + "{}\t <{}>\n".format(k, memesDict.get(k))
   print("A list have been asked.")
   return list
