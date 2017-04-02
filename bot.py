@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # Author : upils
 
-import json
 import discord
 import asyncio
 from discord.ext import commands
@@ -46,17 +45,6 @@ def addMeme(name, url):
 
 # Suppression d'un meme
 def delMeme(name):
- # with open('memes.json') as file:
- #   data = json.load(file)
- # dico = {}
- # for meme in data["memes"]:
- #   dico[meme["name"]] = meme["url"]
- # dico.pop(name)
- # memesDict = {'memes':[ {"name":k,"url":dico.get(k)} for k in dico ]}
- # with open('memes.json','w') as file:
- #   json.dump(memesDict, file)
- # print("The meme {} has been added.".format(name))
- # return data
   with open('memes.txt', 'r') as file:
     lines = file.readlines()
   with open('memes.txt', 'w') as file:
