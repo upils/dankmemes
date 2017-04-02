@@ -60,9 +60,11 @@ async def on_ready():
   print('Logged in as')
   print(client.user.name)
   print(client.user.id)
-  #await client.send_message(message.channel, "I'm here to send memes. \
-#Type !help to get some help to get the list \
-#of currently available commands.")
+  for channel in client.get_all_channels():
+    if "text" in str(channel.type):
+      await client.send_message(channel, "Hey everyone !\n\nI'm here to send memes.\n\
+Type !help to get the list of currently available commands.")
+
 
 @client.event
 async def on_message(message):
@@ -100,10 +102,10 @@ async def on_message(message):
   elif message.content.startswith('!help'):
 
     await client.send_message(message.channel, "Commands: \n \
-    ! <meme> to send a meme on the channel \n \
-    !list to list the available memes \n \
-    !add <name> <url> to add a new meme \n \
-    !del <name> to delete a meme \n")
+! <meme> to send a meme on the channel \n \
+!list to list the available memes \n \
+!add <name> <url> to add a new meme \n \
+!del <name> to delete a meme \n")
 
 #Load API key
 with open('api.key') as file:
