@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author : upils
 
 import json
 import discord
@@ -45,9 +46,9 @@ def delMeme(name):
   for meme in data["memes"]:
     dico[meme["name"]] = meme["url"]
   dico.pop(name)
-  vieilleliste = {'memes':[ {"name":k,"url":dico.get(k)} for k in dico ]}
+  memesListe = {'memes':[ {"name":k,"url":dico.get(k)} for k in dico ]}
   with open('memes.json','w') as file:
-    json.dump(vieilleliste, file)
+    json.dump(memesListe, file)
   print("The meme {} has been added.".format(name))
   return data
 
@@ -57,8 +58,9 @@ async def on_ready():
   print('Logged in as')
   print(client.user.name)
   print(client.user.id)
-  #await client.send_message(message.channel, "I'm here to send memes. Type !help to get some help to get the list \
-  #                                            of currently available commands.")
+  #await client.send_message(message.channel, "I'm here to send memes. \
+#Type !help to get some help to get the list \
+#of currently available commands.")
 
 @client.event
 async def on_message(message):
@@ -100,6 +102,9 @@ async def on_message(message):
     !add <name> <url> to add a new meme \n \
     !del <name> to delete a meme \n")
 
+#Load API key
+with open('api.key') as file:
+    APIKEY = file.read().strip()
+print(APIKEY)
 
-
-client.run('Mjk2MzMyNjkzMTUzNzc1NjE2.C7xdNw.2L3Wk4NtAzD5zu5ZRg24spbpggw')
+client.run(APIKEY)
