@@ -8,49 +8,62 @@ from discord.ext import commands
 
 client = discord.Client()
 
+# Charger le fichier de memes
+def loadFile():
+  data = {}
+  with open('memes.txt') as file:
+    for line in file:
+      name = line.split('\t')[0]
+      url = line.split('\t')[1].strip()
+      data[name] = url
+  return data
+
 # Récupération d'un meme par son nom
 def getMemeByName(memeName):
-  with open('memes.json') as file:
-    data = json.load(file)
-  link = "no link know for this meme."
-  for meme in data["memes"]:
-    if meme["name"] == memeName:
-      link = meme["url"]
-  print(link)
+  memesDict = loadFile()
+  if memeName in memesDict:
+    link = memesDict[memeName]
+  else:
+    link = "no link know for this meme."
   return link
 
 # Liste des memes actuels
 def getMemeList():
-  with open('memes.json') as file:
-    data = json.load(file)
-  liste = ""
-  for meme in data["memes"]:
-    liste = liste + "{}\t <{}>\n".format(meme["name"], meme["url"])
+  memesDict = loadFile()
+  list = ['','']
+  i = 0
+  for k in memesDict:
+    if list[i].count('\n') > 41:
+      i = i + 1
+    list[i] = list[i] + "{}\t <{}>\n".format(k, memesDict.get(k))
   print("A list have been asked.")
-  return liste
+  return list
 
 # Ajout d'un meme
 def addMeme(name, url):
-  with open('memes.json') as file:
-    data = json.load(file)
-  entry = {"name":name, "url":url}
-  with open('memes.json','w') as file:
-    json.dump(data, file)
-  return data
+  with open('memes.txt', 'a') as file:
+    file.write('{}\t{}\n'.format(name, url))
 
 # Suppression d'un meme
 def delMeme(name):
-  with open('memes.json') as file:
-    data = json.load(file)
-  dico = {}
-  for meme in data["memes"]:
-    dico[meme["name"]] = meme["url"]
-  dico.pop(name)
-  memesListe = {'memes':[ {"name":k,"url":dico.get(k)} for k in dico ]}
-  with open('memes.json','w') as file:
-    json.dump(memesListe, file)
-  print("The meme {} has been added.".format(name))
-  return data
+ # with open('memes.json') as file:
+ #   data = json.load(file)
+ # dico = {}
+ # for meme in data["memes"]:
+ #   dico[meme["name"]] = meme["url"]
+ # dico.pop(name)
+ # memesDict = {'memes':[ {"name":k,"url":dico.get(k)} for k in dico ]}
+ # with open('memes.json','w') as file:
+ #   json.dump(memesDict, file)
+ # print("The meme {} has been added.".format(name))
+ # return data
+  with open('memes.txt', 'r') as file:
+    lines = file.readlines()
+  with open('memes.txt', 'w') as file:
+    for line in lines:
+        if line.split('\t')[0] != name:
+          print(line)
+          file.write(line)
 
 
 @client.event
@@ -75,7 +88,8 @@ async def on_message(message):
 
     tmp = await client.send_message(message.channel, 'List INCOMING...')
     liste = getMemeList()
-    await client.edit_message(tmp, liste)
+    for chunk in liste:
+     await client.send_message(message.channel, chunk)
 
   elif message.content.startswith('!add '):
 
@@ -105,6 +119,6 @@ async def on_message(message):
 #Load API key
 with open('api.key') as file:
     APIKEY = file.read().strip()
-print(APIKEY)
 
+#Run the bot
 client.run(APIKEY)
