@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Author : upils
 
+import os
 import discord
 import asyncio
 from discord.ext import commands
@@ -77,10 +78,10 @@ async def on_message(message):
 
   elif message.content.startswith('!list'):
 
-    tmp = await client.send_message(message.channel, 'List INCOMING...')
+    tmp = await client.send_message(message.author, 'List INCOMING...')
     liste = getMemeList()
     for chunk in liste:
-     await client.send_message(message.channel, chunk)
+     await client.send_message(message.author, chunk)
 
   elif message.content.startswith('!add '):
 
@@ -108,8 +109,7 @@ async def on_message(message):
 !del <name> to delete a meme \n")
 
 #Load API key
-with open('api.key') as file:
-    APIKEY = file.read().strip()
+APIKEY = os.environ['DISCORD_KEY']
 
 #Run the bot
 client.run(APIKEY)
