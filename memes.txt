@@ -42,3 +42,5 @@ xdddd	http://i2.kym-cdn.com/photos/images/newsfeed/000/923/668/d83.png
 Pants	http://i.imgur.com/1FN3TzS.gif
 Fun	http://i.imgur.com/Qu1khtQ.jpg
 Cringe	http://i.imgur.com/YEgYB3U.gif
+Disgusting	http://i.imgur.com/1N0UjV3.jpg
+Culture	http://i0.kym-cdn.com/photos/images/original/001/236/841/075.jpg
