@@ -8,7 +8,7 @@ from discord.ext import commands
 
 client = discord.Client()
 
-# Charger le fichier de memes
+# Load the file containing memes
 def loadFile():
   data = {}
   with open('memes.txt') as file:
@@ -18,7 +18,7 @@ def loadFile():
       data[name] = url
   return data
 
-# Récupération d'un meme par son nom
+# Get a name by it's name
 def getMemeByName(memeName):
   memesDict = loadFile()
   if memeName in memesDict:
@@ -27,7 +27,7 @@ def getMemeByName(memeName):
     link = "no link know for this meme."
   return link
 
-# Liste des memes actuels
+# List known memes
 def getMemeList():
   memesDict = loadFile()
   list = ['']
@@ -40,7 +40,7 @@ def getMemeList():
   print("A list have been asked.")
   return list
 
-# Ajout d'un meme
+# Add a meme
 def addMeme(name, url):
   with open('memes.txt', 'a') as file:
     file.write('{}\t{}\n'.format(name, url))
