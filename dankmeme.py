@@ -8,6 +8,8 @@ from discord.ext import commands
 
 client = discord.Client()
 
+DEBUG = False
+
 # Load the file containing memes
 def loadFile():
   data = {}
@@ -52,7 +54,6 @@ def delMeme(name):
   with open('memes.txt', 'w') as file:
     for line in lines:
         if line.split('\t')[0] != name:
-          print(line)
           file.write(line)
 
 
@@ -62,9 +63,16 @@ async def on_ready():
   print(client.user.name)
   print(client.user.id)
   for channel in client.get_all_channels():
-    if "text" in str(channel.type):
-      await client.send_message(channel, "Hey everyone !\n\nI'm here to send memes.\n\
-Type !help to get the list of currently available commands.")
+    if DEBUG == True:
+      if "text" in str(channel.type) and channel.name == "danktest":
+        await client.send_message(channel, "Hey everyone !\n\nI'm here to send memes.\n\
+Type !help to get the list of currently available commands.\n\
+Version 0.0.2")
+    else:
+      if "text" in str(channel.type):
+        await client.send_message(channel, "Hey everyone !\n\nI'm here to send memes.\n\
+Type !help to get the list of currently available commands.\n\
+Version 0.0.2")
 
 
 @client.event
@@ -72,9 +80,12 @@ async def on_message(message):
   if message.content.startswith('! '):
 
     tmp = await client.send_message(message.channel, 'Meme INCOMING...')
-    memeName = message.content[len('! '):].strip()
-    meme = getMemeByName(memeName)
-    await client.edit_message(tmp, meme)
+    try:
+      memeName = message.content[len('! '):].strip()
+      meme = getMemeByName(memeName)
+      await client.edit_message(tmp, meme)
+    except IndexError:
+      await client.edit_message(tmp,'You have to give the name of the meme you want !')
 
   elif message.content.startswith('!list'):
 
@@ -86,19 +97,23 @@ async def on_message(message):
   elif message.content.startswith('!add '):
 
     tmp = await client.send_message(message.channel, 'Adding a meme...')
-    memeName = message.content[len('!add '):].split()[0]
-    print(memeName)
-    memeURL = message.content[len('!add '):].split()[1]
-    print(memeURL)
-    addMeme(memeName, memeURL)
-    await client.edit_message(tmp,'Meme has been added !')
+    try:
+      memeName = message.content[len('!add '):].split()[0]
+      memeURL = message.content[len('!add '):].split()[1]
+      addMeme(memeName, memeURL)
+      await client.edit_message(tmp,'Meme has been added !')
+    except IndexError:
+      await client.edit_message(tmp,'You have to give a name AND a link to your meme !')
 
   elif message.content.startswith('!del '):
 
     tmp = await client.send_message(message.channel, 'Deleting a meme...')
-    memeName = message.content[len('!del '):].split()[0]
-    delMeme(memeName)
-    await client.edit_message(tmp,'The meme has been deleted !')
+    try:
+      memeName = message.content[len('!del '):].split()[0]
+      delMeme(memeName)
+      await client.edit_message(tmp,'The meme has been deleted !')
+    except IndexError:
+      await client.edit_message(tmp,'You have to give the name of the meme you want to delete !')
 
   elif message.content.startswith('!help'):
 
@@ -110,6 +125,7 @@ async def on_message(message):
 
 #Load API key
 APIKEY = os.environ['DISCORD_KEY']
+
 
 #Run the bot
 client.run(APIKEY)
