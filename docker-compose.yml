@@ -2,8 +2,6 @@ version: '2'
 services:
   dankmeme:
     build: .
-    container_name: dankmeme
-    image: dankmeme:latest
     volumes:
       - ./memes.txt:/opt/app/memes.txt
     environment:
