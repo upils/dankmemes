@@ -1,3 +1,5 @@
+echo -e "\e[32m[+] If it exist, stop the container\e[0m"
+docker-compose down
 echo -e "\e[32m[+] Building the image\e[0m"
 docker-compose build --no-cache &&
 echo -e "\e[32m[+] Removing old useless images.\e[0m"
