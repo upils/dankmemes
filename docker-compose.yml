@@ -6,4 +6,4 @@ services:
       - ./memes.txt:/opt/app/memes.txt
     environment:
       - 'DISCORD_KEY=${DISCORD_KEY}'
-    restart: always
+    restart: on-failure

@@ -128,4 +128,13 @@ APIKEY = os.environ['DISCORD_KEY']
 
 
 #Run the bot
-client.run(APIKEY)
+restart = 5
+
+while restart>0:
+  try:
+    client.run(APIKEY)
+  except ConnectionReset:
+    restart = 5
+  except:
+    restart-=1
+
