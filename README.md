@@ -29,5 +29,5 @@ DISCORD_KEY=API_KEY_TO_REPLACE
 Then, you can launch with :
 
 ```
-./dev-build.sh
+./prod-build.sh
 ```

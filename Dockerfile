@@ -1,5 +1,5 @@
 FROM python:alpine
-LABEL description ="Simple bot to send dankmemes." version="0.1"
+LABEL description "Simple bot to send dankmemes." version "0.2"
 
 WORKDIR /opt/app/
 

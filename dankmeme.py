@@ -47,7 +47,7 @@ def addMeme(name, url):
   with open('memes.txt', 'a') as file:
     file.write('{}\t{}\n'.format(name, url))
 
-# Suppression d'un meme
+# Delete a meme
 def delMeme(name):
   with open('memes.txt', 'r') as file:
     lines = file.readlines()
@@ -67,13 +67,7 @@ async def on_ready():
       if "text" in str(channel.type) and channel.name == "danktest":
         await client.send_message(channel, "Hey everyone !\n\nI'm here to send memes.\n\
 Type !help to get the list of currently available commands.\n\
-Version 0.0.2")
-    else:
-      if "text" in str(channel.type):
-        await client.send_message(channel, "Hey everyone !\n\nI'm here to send memes.\n\
-Type !help to get the list of currently available commands.\n\
-Version 0.0.2")
-
+Version 0.2")
 
 @client.event
 async def on_message(message):
