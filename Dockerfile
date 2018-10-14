@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:3.6-alpine
 LABEL description "Simple bot to send dankmemes." version "0.2"
 
 WORKDIR /opt/app/
